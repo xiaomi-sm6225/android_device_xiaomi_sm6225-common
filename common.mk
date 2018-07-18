@@ -54,6 +54,7 @@ PRODUCT_PACKAGES += \
 # Overlays
 PRODUCT_PACKAGES += \
     CarrierConfigResCommon \
+    DialerResCommon \
     FrameworksResCommon \
     FrameworksResTarget \
     SettingsResCommon \
