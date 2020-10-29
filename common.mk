@@ -19,3 +19,7 @@ $(call inherit-product, vendor/xiaomi/sm6225-common/sm6225-common-vendor.mk)
 
 # Shipping API Level
 PRODUCT_SHIPPING_API_LEVEL := 33
+
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH)
