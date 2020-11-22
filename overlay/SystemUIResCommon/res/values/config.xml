@@ -6,4 +6,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Doze: does this device support STATE_DOZE?  -->
     <bool name="doze_display_state_supported">true</bool>
+
+    <!-- Whether to show min refresh rate in display settings -->
+    <bool name="config_show_min_refresh_rate_switch">true</bool>
 </resources>
