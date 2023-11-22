@@ -93,6 +93,8 @@ $(foreach p, $(call to-upper, $(BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST)), \
     $(eval BOARD_$(p)IMAGE_FILE_SYSTEM_TYPE := ext4) \
     $(eval TARGET_COPY_OUT_$(p) := $(call to-lower, $(p))))
 
+include vendor/lineage/config/BoardConfigReservedSize.mk
+
 # Platform
 TARGET_BOARD_PLATFORM := bengal
 TARGET_BOARD_SUFFIX := _515
