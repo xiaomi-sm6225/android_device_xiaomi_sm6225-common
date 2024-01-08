@@ -98,6 +98,16 @@ PRODUCT_PACKAGES += \
 
 $(call soong_config_set, ufsbsg, ufsframework, bsg)
 
+# Display
+PRODUCT_PACKAGES += \
+    android.hardware.graphics.mapper@4.0-impl-qti-display \
+    vendor.qti.hardware.display.allocator-service \
+    vendor.qti.hardware.display.composer-service
+
+PRODUCT_PACKAGES += \
+    init.qti.display_boot.rc \
+    init.qti.display_boot.sh
+
 # Shipping API Level
 BOARD_SHIPPING_API_LEVEL := 33
 
