@@ -193,6 +193,10 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.power-service-qti
 
+# QMI
+PRODUCT_PACKAGES += \
+    libvndfwk_detect_jni.qti_vendor # Needed by CNE app
+
 # Rootdir
 PRODUCT_PACKAGES += \
     fstab.qcom \
