@@ -20,6 +20,7 @@ from extract_utils.main import (
 
 namespace_imports = [
     'device/xiaomi/sm6225-common',
+    'hardware/xiaomi',
 ]
 
 
