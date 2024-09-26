@@ -45,6 +45,9 @@ TARGET_2ND_CPU_VARIANT := cortex-a9
 TARGET_BOOTLOADER_BOARD_NAME := bengal
 TARGET_NO_BOOTLOADER := true
 
+# Filesystem
+TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/configs/config.fs
+
 # Hardware
 BOARD_USES_QCOM_HARDWARE := true
 
