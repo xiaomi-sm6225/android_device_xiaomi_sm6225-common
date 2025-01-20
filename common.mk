@@ -19,5 +19,8 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 # A/B
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 
+# Shipping API Level
+BOARD_SHIPPING_API_LEVEL := 33
+
 # Inherit from vendor blobs
 $(call inherit-product, vendor/xiaomi/sm6225-common/sm6225-common-vendor.mk)
