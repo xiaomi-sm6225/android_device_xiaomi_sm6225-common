@@ -101,6 +101,10 @@ include vendor/lineage/config/BoardConfigReservedSize.mk
 TARGET_BOARD_PLATFORM := bengal
 TARGET_BOARD_SUFFIX := _515
 
+# Properties
+TARGET_ODM_PROP += $(COMMON_PATH)/properties/odm.prop
+TARGET_VENDOR_PROP += $(COMMON_PATH)/properties/vendor.prop
+
 # Recovery
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
 TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/rootdir/fstab.qcom
@@ -110,6 +114,9 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 # RIL
 ENABLE_VENDOR_RIL_SERVICE := true
+
+# Security patch level
+VENDOR_SECURITY_PATCH := 2025-02-01
 
 # Sepolicy
 include device/qcom/sepolicy_vndr/SEPolicy.mk
