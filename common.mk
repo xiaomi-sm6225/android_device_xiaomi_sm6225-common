@@ -68,7 +68,8 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     fstab.qcom \
     fstab.qcom.vendor_ramdisk \
- 	init.qcom.recovery.rc
+ 	init.qcom.recovery.rc \
+    init.xiaomi_sm6225.rc
 
 # Shipping API Level
 PRODUCT_SHIPPING_API_LEVEL := 33

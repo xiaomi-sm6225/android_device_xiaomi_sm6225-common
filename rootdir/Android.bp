@@ -17,3 +17,10 @@ prebuilt_etc {
     sub_dir: "init",
     recovery: true,
 }
+
+prebuilt_etc {
+    name: "init.xiaomi_sm6225.rc",
+    src: "init.xiaomi_sm6225.rc",
+    sub_dir: "init/",
+    vendor: true,
+}

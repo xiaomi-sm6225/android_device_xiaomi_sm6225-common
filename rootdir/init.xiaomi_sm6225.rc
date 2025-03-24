@@ -1,0 +1,40 @@
+#
+# Copyright (C) 2025 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+on boot
+    chmod 0777 /dev/goodix_fp
+    chmod 0777 /dev/xiaomi-fp
+    chown system system /dev/goodix_fp
+    chown system system /dev/xiaomi-fp
+
+    chown system system /sys/class/mi_display/disp-DSI-0/disp_param
+    chmod 0664 /sys/class/mi_display/disp-DSI-0/disp_param
+    chown system system /sys/class/mi_display/disp-DSI-0/mipi_rw
+    chmod 0664 /sys/class/mi_display/disp-DSI-0/mipi_rw
+    chown system system /sys/class/mi_display/disp-DSI-0/panel_info
+    chmod 0444 /sys/class/mi_display/disp-DSI-0/panel_info
+    chown system system /sys/class/mi_display/disp-DSI-0/doze_brightness
+
+    chown system system /sys/bus/platform/devices/soc:fpc1020/irq
+    chown system system /sys/bus/platform/devices/soc:fpc1020/wakeup_enable
+    chown system system /sys/bus/platform/devices/soc:fpc1020/modalias
+    chown system system /sys/bus/platform/devices/soc:fpc1020/compatible_all
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/irq
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/wakeup_enable
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/modalias
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/compatible_all
+
+	chown system system /sys/class/touch/touch_dev/palm_sensor
+	chmod 0664 /sys/class/touch/touch_dev/palm_sensor
+    chown system system /sys/class/touch/touch_dev/fod_press_status
+    chmod 0664 /sys/class/touch/touch_dev/fod_press_status
+
+on post-fs-data
+    mkdir /data/vendor/fpc 0777 system system
+    mkdir /data/vendor/goodix 0777 system system
+    mkdir /data/vendor/fpdump 0777 system system
+    mkdir /mnt/vendor/persist/fpc 0777 system system
+    mkdir /mnt/vendor/persist/goodix 0777 system system
