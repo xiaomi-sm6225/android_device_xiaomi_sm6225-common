@@ -51,6 +51,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fastbootd
 
+# Overlays
+PRODUCT_PACKAGES += \
+    CarrierConfigResCommon \
+    FrameworksResCommon \
+    FrameworksResTarget \
+    SettingsResCommon \
+    SystemUIResCommon \
+    TelephonyResCommon \
+    WifiResCommon \
+    WifiResTarget
+
 # Partitions
 PRODUCT_PACKAGES += \
     vendor_bt_firmware_mountpoint \
