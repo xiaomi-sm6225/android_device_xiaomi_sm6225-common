@@ -8,6 +8,7 @@
 include vendor/xiaomi/sm6225-common/BoardConfigVendor.mk
 
 COMMON_PATH := device/xiaomi/sm6225-common
+KERNEL_PATH := device/xiaomi/$(TARGET_DEVICE)-kernel
 
 # A/B
 AB_OTA_PARTITIONS += \
@@ -49,6 +50,12 @@ BOARD_SUPPORTS_OPENSOURCE_STHAL := true
 TARGET_BOOTLOADER_BOARD_NAME := bengal
 TARGET_NO_BOOTLOADER := true
 
+# DTB/DTBO
+BOARD_KERNEL_SEPARATED_DTBO := true
+BOARD_USES_DT := true
+BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)/dtbs
+BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbs/dtbo.img
+
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/configs/config.fs
 
@@ -66,6 +73,30 @@ DEVICE_MANIFEST_FILE += \
     $(COMMON_PATH)/configs/vintf/manifest.xml \
     $(COMMON_PATH)/configs/vintf/manifest_radio.xml \
     $(COMMON_PATH)/configs/vintf/manifest_xiaomi.xml
+
+# Kernel prebuilt
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_SOURCE := $(KERNEL_PATH)/kernel-headers
+TARGET_KERNEL_VERSION := 5.15
+
+TARGET_NO_KERNEL_OVERRIDE := true
+
+TARGET_FORCE_PREBUILT_KERNEL := true
+TARGET_PREBUILT_KERNEL := $(KERNEL_PATH)/Image
+
+PRODUCT_COPY_FILES += $(TARGET_PREBUILT_KERNEL):kernel
+
+# Kernel modules
+DLKM_MODULES_PATH := $(KERNEL_PATH)/vendor_dlkm
+RAMDISK_MODULES_PATH := $(KERNEL_PATH)/vendor_ramdisk
+BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(DLKM_MODULES_PATH)/*.ko)
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(patsubst %,$(DLKM_MODULES_PATH)/%,$(shell cat $(DLKM_MODULES_PATH)/modules.load))
+BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DLKM_MODULES_PATH)/modules.blocklist
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(RAMDISK_MODULES_PATH)/*.ko)
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD  := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load.recovery))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(RAMDISK_MODULES_PATH)/modules.blocklist
 
 # Metadata
 BOARD_USES_METADATA_PARTITION := true
