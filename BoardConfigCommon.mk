@@ -64,10 +64,10 @@ $(call soong_config_set, ufsbsg, ufsframework, bsg)
 TARGET_BOOTLOADER_BOARD_NAME := bengal
 
 # DTB/DTBO
-BOARD_KERNEL_SEPARATED_DTBO := true
-BOARD_USES_DT := true
-BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)/dtbs
-BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbs/dtbo.img
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_USES_QCOM_MERGE_DTBS_SCRIPT := true
+TARGET_NEEDS_DTBOIMAGE := true
+TARGET_MERGE_DTBS_WILDCARD ?= khaje
 
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/configs/config.fs
@@ -78,17 +78,18 @@ BOARD_USES_QCOM_HARDWARE := true
 # Kernel
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_RAMDISK_USE_LZ4 := true
-TARGET_NEEDS_DTBOIMAGE := true
+BOARD_USES_GENERIC_KERNEL_IMAGE := true
 
-BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_PAGESIZE := 4096
+BOARD_KERNEL_BASE        := 0x00000000
+BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_KERNEL_IMAGE_NAME := Image
 
-BOARD_BOOT_HEADER_VERSION := 4
-BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOT_HEADER_VERSION)
-
-BOARD_INIT_BOOT_HEADER_VERSION := 4
-BOARD_MKBOOTIMG_INIT_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
+TARGET_KERNEL_ADDITIONAL_FLAGS := TARGET_PRODUCT=$(PRODUCT_DEVICE)
+TARGET_KERNEL_SOURCE := kernel/xiaomi/sm6225
+TARGET_KERNEL_CONFIG := \
+    gki_defconfig \
+    vendor/bengal_GKI.config \
+    vendor/xiaomi/$(PRODUCT_DEVICE)_GKI.config
 
 BOARD_KERNEL_CMDLINE := \
     video=vfb:640x400,bpp=32,memsize=3072000 \
@@ -101,29 +102,45 @@ BOARD_BOOTCONFIG := \
     androidboot.usbcontroller=4e00000.dwc3 \
     androidboot.selinux=permissive
 
-# Kernel prebuilt
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_SOURCE := $(KERNEL_PATH)/kernel-headers
-TARGET_KERNEL_VERSION := 5.15
+BOARD_BOOT_HEADER_VERSION := 4
+BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOT_HEADER_VERSION)
 
-TARGET_NO_KERNEL_OVERRIDE := true
+BOARD_INIT_BOOT_HEADER_VERSION := 4
+BOARD_MKBOOTIMG_INIT_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 
-TARGET_FORCE_PREBUILT_KERNEL := true
-TARGET_PREBUILT_KERNEL := $(KERNEL_PATH)/Image
+# Kernel (modules)
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load.system_dlkm))
+BOARD_SYSTEM_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.systemdlkm_blocklist.msm.bengal
+BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.vendor_blocklist.msm.bengal
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load.first_stage))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load.first_stage $(COMMON_PATH)/modules.load.recovery))
+BOOT_KERNEL_MODULES := $(strip $(shell cat $(COMMON_PATH)/modules.include.vendor_ramdisk $(COMMON_PATH)/modules.load.first_stage $(COMMON_PATH)/modules.load.recovery))
+SYSTEM_KERNEL_MODULES := $(strip $(shell cat $(COMMON_PATH)/modules.include.system_dlkm))
 
-PRODUCT_COPY_FILES += $(TARGET_PREBUILT_KERNEL):kernel
-
-# Kernel modules
-DLKM_MODULES_PATH := $(KERNEL_PATH)/vendor_dlkm
-RAMDISK_MODULES_PATH := $(KERNEL_PATH)/vendor_ramdisk
-BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(DLKM_MODULES_PATH)/*.ko)
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(patsubst %,$(DLKM_MODULES_PATH)/%,$(shell cat $(DLKM_MODULES_PATH)/modules.load))
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DLKM_MODULES_PATH)/modules.blocklist
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(RAMDISK_MODULES_PATH)/*.ko)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD  := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load.recovery))
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(RAMDISK_MODULES_PATH)/modules.blocklist
+TARGET_KERNEL_EXT_MODULE_ROOT := kernel/xiaomi/sm6225-modules
+TARGET_KERNEL_EXT_MODULES := \
+        qcom/opensource/mmrm-driver \
+        qcom/opensource/audio-kernel \
+        qcom/opensource/bt-kernel \
+        qcom/opensource/camera-kernel \
+        qcom/opensource/dataipa/drivers/platform/msm \
+        qcom/opensource/datarmnet/core \
+        qcom/opensource/datarmnet-ext/aps \
+        qcom/opensource/datarmnet-ext/offload \
+        qcom/opensource/datarmnet-ext/shs \
+        qcom/opensource/datarmnet-ext/perf \
+        qcom/opensource/datarmnet-ext/perf_tether \
+        qcom/opensource/datarmnet-ext/sch \
+        qcom/opensource/datarmnet-ext/wlan \
+        qcom/opensource/display-drivers/msm \
+        qcom/opensource/video-driver \
+        qcom/opensource/graphics-kernel \
+	qcom/opensource/securemsm-kernel \
+        qcom/opensource/touch-drivers \
+        qcom/opensource/wlan/platform \
+        qcom/opensource/wlan/qcacld-3.0
 
 # Metadata
 BOARD_USES_METADATA_PARTITION := true
