@@ -111,5 +111,9 @@ PRODUCT_PACKAGES += \
 # Shipping API Level
 BOARD_SHIPPING_API_LEVEL := 33
 
+# Fastboot
+PRODUCT_PACKAGES += \
+    fastbootd
+
 # Inherit from vendor blobs
 $(call inherit-product, vendor/xiaomi/sm6225-common/sm6225-common-vendor.mk)
