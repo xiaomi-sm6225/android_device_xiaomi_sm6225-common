@@ -75,7 +75,6 @@ icc-debug.ko
 slimbus.ko
 slim-qcom-ngd-ctrl.ko
 qrtr.ko
-ns.ko
 msm_sysstats.ko
 phy-qcom-ufs-qmp-v4-kalama.ko
 phy-qcom-ufs-qmp-v4-waipio.ko
@@ -211,10 +210,8 @@ stm_ftrace.ko
 snd-usb-audio-qmi.ko
 cfg80211.ko
 qrtr-smd.ko
-bootinfo.ko
 msm_drm.ko
 msm-mmrm.ko
 hdcp_qseecom_dlkm.ko
 smcinvoke_dlkm.ko
 qseecom_dlkm.ko
-swinfo.ko
