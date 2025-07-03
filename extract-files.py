@@ -20,7 +20,35 @@ from extract_utils.main import (
 
 namespace_imports = [
     'device/xiaomi/sm6225-common',
+    'hardware/qcom-caf/sm6225',
+    'hardware/qcom-caf/wlan',
+    'hardware/xiaomi',
+    'vendor/qcom/opensource/commonsys-intf/display',
+    'vendor/qcom/opensource/dataservices',
 ]
+
+
+libs_add_vendor_suffix = (
+    'vendor.qti.hardware.qccsyshal@1.0',
+    'vendor.qti.hardware.qccsyshal@1.1',
+    'vendor.qti.hardware.qccsyshal@1.2',
+    'vendor.qti.hardware.qccvndhal@1.0',
+    'vendor.qti.hardware.sigma_miracast@1.0',
+    'vendor.qti.hardware.wifidisplaysession@1.0',
+    'vendor.qti.imsrtpservice@3.0',
+    'vendor.qti.imsrtpservice@3.1',
+    'vendor.qti.diaghal@1.0',
+    'com.qualcomm.qti.dpm.api@1.0',
+)
+
+libs_remove = (
+    'libar-pal',
+    'libar-acdb',
+    'liblx-osal',
+    'libats',
+    'libagm',
+    'libpalclient',
+)
 
 
 def lib_fixup_vendor_suffix(lib: str, partition: str, *args, **kwargs):
@@ -29,6 +57,8 @@ def lib_fixup_vendor_suffix(lib: str, partition: str, *args, **kwargs):
 
 lib_fixups: lib_fixups_user_type = {
     **lib_fixups,
+    libs_add_vendor_suffix: lib_fixup_vendor_suffix,
+    libs_remove: lib_fixup_remove,
 }
 
 blob_fixups: blob_fixups_user_type = {
