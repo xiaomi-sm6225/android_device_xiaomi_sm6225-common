@@ -126,6 +126,10 @@ PRODUCT_PACKAGES += \
 # Shipping API Level
 BOARD_SHIPPING_API_LEVEL := 33
 
+# DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm-service.clearkey
+
 # Fastboot
 PRODUCT_PACKAGES += \
     fastbootd
