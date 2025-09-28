@@ -310,7 +310,7 @@ PRODUCT_PACKAGES += \
 
 # WiFi firmware symlinks
 PRODUCT_PACKAGES += \
-    firmware_qca_cld_wlan_mac.bin_symlink
+    firmware_qca_cld_wlan_mac.bin_symlink \
     firmware_qca_cld_WCNSS_qcom_cfg.ini_symlink
 
 # WiFi config files
