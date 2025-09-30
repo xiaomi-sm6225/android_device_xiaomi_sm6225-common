@@ -549,26 +549,7 @@ vendor/bin/msm_irqbalance
 vendor/etc/msm_irqbalance.conf
 
 # Init
-vendor/bin/init.class_main.sh
-vendor/bin/init.kernel.post_boot-bengal-iot.sh
-vendor/bin/init.kernel.post_boot-bengal.sh
-vendor/bin/init.kernel.post_boot.sh
-vendor/bin/init.qcom.early_boot.sh
-vendor/bin/init.qcom.sh
-vendor/etc/init/hw/init.qcom.factory.rc
-vendor/etc/init/hw/init.qcom.rc
-vendor/etc/init/hw/init.qti.kernel.rc
-vendor/etc/init/hw/init.target.rc
 vendor/etc/init/vendor.qti.diag.rc
-
-# Kernel
-vendor/bin/init.qcom.class_core.sh
-vendor/bin/init.qcom.post_boot.sh
-vendor/bin/init.qti.kernel.debug-bengal.sh
-vendor/bin/init.qti.kernel.debug.sh
-vendor/bin/init.qti.kernel.sh
-vendor/bin/system_dlkm_modprobe.sh
-vendor/bin/vendor_modprobe.sh
 
 # Keymaster
 vendor/bin/hw/android.hardware.security.keymint-service-qti
@@ -706,10 +687,6 @@ vendor/lib64/vendor.qti.hardware.qccsyshal@1.1.so;MODULE_SUFFIX=_vendor
 vendor/lib64/vendor.qti.hardware.qccsyshal@1.2.so;MODULE_SUFFIX=_vendor
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0-halimpl.so
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0.so;MODULE_SUFFIX=_vendor
-
-# QCV
-vendor/bin/init.qti.qcv.sh
-vendor/etc/init/init.qti.qcv.rc
 
 # QMI
 system/etc/sysconfig/qti_whitelist.xml
@@ -902,7 +879,6 @@ vendor/lib64/vendor.qti.hardware.radio.uim_remote_server@1.0.so
 
 # Sensors
 vendor/bin/hw/vendor.qti.hardware.sensorscalibrate@1.0-service
-vendor/bin/init.qcom.sensors.sh
 vendor/bin/sensors.qti
 vendor/bin/sscrpcd
 vendor/etc/init/init.vendor.sensors.rc
@@ -966,9 +942,6 @@ vendor/lib64/libGPQTEEC_vendor.so
 vendor/lib64/libGPTEE_vendor.so
 vendor/lib64/libQTEEConnector_vendor.so
 vendor/lib64/vendor.qti.hardware.qteeconnector@1.0.so
-
-# Uevent
-vendor/etc/ueventd.rc
 
 # Venus firmware
 vendor/firmware/venus.mbn
