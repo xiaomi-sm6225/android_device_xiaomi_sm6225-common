@@ -57,12 +57,10 @@ PRODUCT_PACKAGES += \
     lib_bt_aptx \
     lib_bt_ble \
     lib_bt_bundle \
-    libagmclient \
     libagm_compress_plugin \
     libagm_mixer_plugin \
     libagm_pcm_plugin \
     libfmpal \
-    libpalclient \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
