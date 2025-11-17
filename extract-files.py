@@ -69,6 +69,33 @@ blob_fixups: blob_fixups_user_type = {
         .add_needed('libhidlbase_shim.so'),
     'vendor/lib64/libqcodec2_core.so': blob_fixup()
         .add_needed('libcodec2_shim.so'),
+    'vendor/etc/qcril_database/upgrade/other/0_initial_qcrilnr.sql': blob_fixup()
+        .regex_replace(
+            r'CREATE TABLE qcril_properties_table\s*\(\s*property TEXT PRIMARY KEY NOT NULL,\s*def_val TEXT,\s*value TEXT\s*\);',
+            'CREATE TABLE qcril_properties_table (property TEXT,value TEXT, PRIMARY KEY(property));'
+        ),
+    'vendor/etc/qcril_database/upgrade/other/5_version_update_ecc_table_qcrilnr.sql': blob_fixup()
+        .regex_replace( r'COMMIT TRANSACTION;\s*',''),
+    'vendor/etc/qcril_database/upgrade/other/7_version_update_ecc_table.sql': blob_fixup()
+        .regex_replace(
+            r'(?m)^INSERT INTO qcril_emergency_source_hard_mcc_table',
+            'INSERT OR REPLACE INTO qcril_emergency_source_hard_mcc_table'
+        )
+        .regex_replace(
+             r'(?m)^INSERT INTO qcril_emergency_source_mcc_mnc_table',
+            'INSERT OR REPLACE INTO qcril_emergency_source_mcc_mnc_table'
+        ),
+    'vendor/etc/qcril_database/upgrade/other/9_version_update_ecc_table.sql': blob_fixup()
+        .regex_replace(
+            r'(?m)^INSERT INTO qcril_emergency_source_hard_mcc_table',
+            'INSERT OR REPLACE INTO qcril_emergency_source_hard_mcc_table'
+        ),
+    'vendor/etc/qcril_database/upgrade/other/15_version_update_ecc_table.sql': blob_fixup()
+        .regex_replace(
+            r"(INSERT INTO qcril_emergency_source_hard_mcc_table\b.*?where\s+MCC\s*=\s*'(\d+)'\s+AND\s+NUMBER\s*=\s*'(\d+)';)",
+            r"INSERT OR REPLACE INTO qcril_emergency_source_hard_mcc_table (MCC, NUMBER) VALUES ('\2', '\3');"
+
+        )
 } # fmt: skip
 
 module = ExtractUtilsModule(
